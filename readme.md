@@ -72,7 +72,7 @@ module.exports = class ViewDemo {
     getView(){
         return {
             $render : {
-                path : "/demo.pug"
+                path : "demo.pug"
             }
         }
     }
