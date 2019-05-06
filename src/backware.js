@@ -5,14 +5,19 @@ module.exports = {
         var { $render } = prev;
         if ($render == null) return prev;
         res.setHeader("Content-Type", "text/html");
-        var viewRender = viewer.getView($render.path);
-        console.log($render);
-        var renderedView = viewRender($render.data);
+        var renderedView;
+        if(typeof $render == "string"){
+            var viewRender = viewer.getView($render);
+            var renderedView = viewRender();
+        } else {
+            var viewRender = viewer.getView($render.path);
+            var renderedView = viewRender($render.data);
+        }
         res.end(renderedView);
     },
 
     onCreate(cfg = {}) {
-        var viewDirPath = cfg.view_dir || "views";
+        var viewDirPath = cfg.root || "views";
         viewer.scanDir(viewDirPath);
     },
     typeFilter: ["Object"],
